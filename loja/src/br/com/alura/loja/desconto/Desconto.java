@@ -11,6 +11,18 @@ public abstract class Desconto { // classe mãe
     public Desconto(Desconto proximo) {
         this.proximo = proximo;
     }
+/*
+PADRÃO DE PROJETO - TEMPLATE METHOD
+    -> agora a classe mãe é responsável pelo processo de delegação de verificar e calcular o desconto.
+    no template method, a classe mãe faz parte do processo e outra parte ela delega.
+*/
+    public BigDecimal calcular(Orcamento orcamento){
+        if (deveAplicar(orcamento)){
+            return efetuarCalculo(orcamento);
+        }
+        return proximo.calcular(orcamento);
+    }
 
-    public abstract BigDecimal calcular(Orcamento orcamento);
+    protected abstract BigDecimal efetuarCalculo(Orcamento orcamento);
+    protected abstract boolean deveAplicar(Orcamento orcamento);
 }
